@@ -104,49 +104,22 @@ public:
     }
 
     void insert(int index, T value){
-        if(index>=0 and index<length()){
-            MyList<T> e;
-            Node* node = f;
-            int c = 0;
-            while(c!=index){
-                e.push_back(node->value);
-                node = node->next;
-                c++;
-            }
-            e.push_back(value);
-            while(c<length()){
-                e.push_back(node->value);
-                node = node->next;
-                c++;
-            }
-            clear();
-            c = 0;
-            while(c<e.length()){
-                push_back(e[c]->value);
-                c++;
-            }
+        Node* new_node = new Node(value);
+        Node* node = f;
+        int c = 0;
+        while (c<index) {
+            node = f->next;
+            c++;
         }
-        else{
-            cout<<"Index out of range!";
-        }
+        Node* _node = node->next;
+        new_node->next = _node;
+        node->next = new_node;
     }
 
     void push_front(T value){
-        MyList<T> e;
-        Node* node = f;
-        int c = 0;
-        e.push_back(value);
-        while(c<length()){
-            e.push_back(node->value);
-            node = node->next;
-            c++;
-        }
-        clear();
-        c = 0;
-        while(c<e.length()){
-            push_back(e[c]->value);
-            c++;
-        }
+        Node* new_node = new Node(value);
+        new_node->next = f;
+        f = new_node;
     }
 private:
     friend ostream& operator << (ostream &os, const MyList<T> &q){
@@ -180,8 +153,8 @@ int main()
     a.push_back(2);
     a.push_back(3);
     a.push_back(4);
-
-    a.pop_front();
+    a.push_front(6);
+    a.insert(1,12);
     cout<<a;
     a.clear();
     a.push_back(1);
