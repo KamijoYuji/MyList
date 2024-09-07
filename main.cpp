@@ -62,7 +62,9 @@ public:
 
     void pop_front(){
         if(f!=nullptr){
-            f = f->next;
+            Node* node = f;
+            f = node->next;
+            delete node;
         }
     }
 
@@ -75,6 +77,7 @@ public:
                 while(node->next!=l)
                     node = node->next;
                 node->next = nullptr;
+                delete l;
                 l = node;
             }
         }
@@ -93,8 +96,11 @@ public:
     }
 
     void clear(){
-        while(f!=nullptr)
-            f = f->next;
+        while(f!=nullptr){
+            Node* node = f;
+            f = node->next;
+            delete node;
+        }
     }
 
     void insert(int index, T value){
@@ -175,8 +181,11 @@ int main()
     a.push_back(3);
     a.push_back(4);
 
+    a.pop_front();
     cout<<a;
-    cout<<a[0]<<endl;
+    a.clear();
+    a.push_back(1);
+    cout<<endl<<a;
     MyList<int> e;
     cin>>e;
     cout<<e;
