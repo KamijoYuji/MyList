@@ -14,10 +14,10 @@ private:
         }
     };
 
-public:
-
     Node* f;
     Node* l;
+
+public:
 
     MyList(){
         f = nullptr;
