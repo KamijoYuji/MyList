@@ -17,9 +17,13 @@ private:
     Node* f;
     Node* l;
 
+    int length = 0;
+
 public:
 
-    int length = 0;
+    int getLength(){
+        return length;
+    }
 
     MyList(){
         f = nullptr;
@@ -169,7 +173,7 @@ int main()
     a.insert(1,12);
     a.pop_front();
     a.pop_back();
-    cout<<a<<"l:"<<a.length;
+    cout<<a<<"l:"<<a.getLength();
     a.clear();
     a.push_back(1);
     cout<<endl<<a;
