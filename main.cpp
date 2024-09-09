@@ -60,6 +60,43 @@ public:
         cout<<"Nothing.\n";
     }
 
+    void delete_element(T v){
+        if(f == nullptr)
+            return;
+
+        if(f->value == v)
+            pop_front();
+
+        bool c = 0;
+        Node* node = f;
+
+        while(node != nullptr){
+            if(node->next == nullptr){
+                break;
+            }
+            if(node->next->value == v){
+                c = 1;
+                break;
+            }
+            node = node->next;
+        }
+
+        if(!c)
+            return;
+
+        if(node != nullptr){
+            c = 1;
+            Node* _node = node->next;
+            node->next = node->next->next;
+            delete _node;
+        }
+
+        length--;
+
+        if(c)
+            delete_element(v);
+    }
+
     void pop_front(){
         if(f == nullptr)
             return;
@@ -113,6 +150,16 @@ public:
     void insert(int index, T value){
         if(index >= length or index < 0)
             return;
+
+        if(index == 0){
+            push_front(value);
+            return;
+        }
+
+        if(index == length-1){
+            push_back(value);
+            return;
+        }
 
         Node* new_node = new Node(value);
         Node* node = f;
@@ -169,14 +216,15 @@ int main()
     a.push_back(2);
     a.push_back(3);
     a.push_back(4);
-    a.push_front(6);
     a.insert(1,12);
-    a.pop_front();
-    a.pop_back();
+    a.insert(3,12);
+    a.insert(a.getLength()-1,12);
+    a.delete_element(12);
     cout<<a<<"l:"<<a.getLength();
     a.clear();
     a.push_back(1);
     cout<<endl<<a;
+
     MyList<int> e;
     cin>>e;
     cout<<e;
