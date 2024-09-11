@@ -1,3 +1,4 @@
+//с классами, на .h и .cpp разбить
 #include<iostream>
 
 using namespace std;
