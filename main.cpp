@@ -126,7 +126,7 @@ public:
         length--;
     }
 
-    Node* operator[](int index){
+    T& operator[](int index){
         int c = 0;
         Node* node = f;
 
@@ -137,7 +137,7 @@ public:
 
         if(node == nullptr)
             cout<<"Index out of range!";
-        return node;
+        return *node->value;
     }
 
     void clear(){
@@ -244,6 +244,6 @@ int main()
 
     cout<<a.getLength()<<endl;
 
-    cout<<a[0];
+    cout<<a[0][1];
     return 0;
 }
