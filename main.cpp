@@ -1,4 +1,3 @@
-//с классами, на .h и .cpp разбить
 #include<iostream>
 
 using namespace std;
@@ -7,9 +6,9 @@ template <typename T>
 class MyList{
 private:
     struct Node{
-        T value;
+        T* value;
         Node* next;
-        Node(T _value){
+        Node(T *_value){
             value = _value;
             next = nullptr;
         }
@@ -31,7 +30,7 @@ public:
         l = nullptr;
     }
 
-    void push_back(T value){
+    void push_back(T* value){
         Node* new_node = new Node(value);
 
         if(f == nullptr){
@@ -61,7 +60,7 @@ public:
         cout<<"Nothing.\n";
     }
 
-    void delete_element(T v){
+    void delete_element(T* v){
         if(f == nullptr)
             return;
 
@@ -189,14 +188,14 @@ private:
     friend ostream& operator << (ostream &os, const MyList<T> &q){
         Node* node = q.f;
         while (node != nullptr) {
-            os<<node->value<<" ";
+            os<<*node->value<<" ";
             node = node->next;
         }
         return os;
     }
 
     friend ostream& operator << (ostream &os, Node* node){
-        return os << node->value;
+        return os << *node->value;
     }
 
     friend istream& operator >> (istream &in, MyList<T> &q){
@@ -211,24 +210,40 @@ private:
 
 int main()
 {
-    MyList<int> a;
+    MyList<MyList<int>> a;
 
-    a.push_back(1);
-    a.push_back(2);
-    a.push_back(3);
-    a.push_back(4);
-    a.insert(1,12);
-    a.insert(3,12);
-    a.insert(a.getLength()-1,12);
-    a.delete_element(12);
-    cout<<a<<"l:"<<a.getLength();
-    a.clear();
-    a.push_back(1);
-    cout<<endl<<a;
-
+    MyList<int> b;
+    MyList<int> c;
+    MyList<int> d;
     MyList<int> e;
-    cin>>e;
-    cout<<e;
 
+    int b1 = 3;
+    int c1 = 4;
+    int d1 = 5;
+    int e1 = 6;
+
+    b.push_back(&b1);
+    c.push_back(&c1);
+    c.push_back(&b1);
+    c.push_back(&e1);
+    c.push_back(&c1);
+    c.push_back(&d1);
+    d.push_back(&d1);
+    e.push_back(&e1);
+
+    a.push_back(&b);
+    a.push_back(&c);
+    a.push_back(&d);
+    a.push_back(&e);
+
+    a.pop_back();
+
+    cout<<a.getLength()<<endl;
+
+    a.delete_element(&b);
+
+    cout<<a.getLength()<<endl;
+
+    cout<<a[0];
     return 0;
 }
