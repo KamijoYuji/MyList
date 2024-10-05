@@ -301,7 +301,7 @@ public:
     }
 
     void copy(MyList b){
-        if(this != &b)
+        if(this == &b)
             return;
         clear();
         for(int i = 0; i < b.length; i++)
