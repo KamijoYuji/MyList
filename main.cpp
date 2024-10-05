@@ -360,7 +360,7 @@ int main()
     q[0] = 1;
     cout<<a<<"\n";
     MyList<MyList<int>> a1 = a;
-    cout<<"\na1 = "<<a1<<"\n7";
+    cout<<"\na1 = "<<a1<<"\n";
     a[0][1] = 888;
     cout<<"\na1 = "<<a1;
     return 0;
