@@ -318,8 +318,8 @@ private:
         return os;
     }
 
-    friend ostream& operator << (ostream &os, Node* node){
-        return os << *node->value;
+    friend ostream& operator << (ostream &os, T* value){
+        return os << *value;
     }
 
     friend istream& operator >> (istream &in, MyList<T> &q){
