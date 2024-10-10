@@ -27,12 +27,10 @@ private:
 
 public:
 
-    MyList& operator = (const MyList& other){
-        if(this != &other){
-            f = other.f;
-            l = other.l;
-            length = other.length;
-        }
+    MyList& operator = (MyList other){
+        f = other.f;
+        l = other.l;
+        length = other.length;
         return *this;
     }
 
@@ -162,54 +160,49 @@ public:
             }
             if(*node->next->value == v){
                 c = 1;
-                break;
             }
-            node = node->next;
+            if(!c)node = node->next;
+
+            if(node != nullptr and c){
+                Node* _node = node->next;
+                node->next = node->next->next;
+                delete _node;
+            }
+            c = 0;
+            length--;
         }
-
-        if(!c)
-            return;
-
-        if(node != nullptr){
-            c = 1;
-            Node* _node = node->next;
-            node->next = node->next->next;
-            delete _node;
-        }
-
-        length--;
-
-        if(c)
-            delete_element(v);
     }
 
-    void pop_front(){
-        if(f == nullptr)
-            return;
-        Node* node = f;
-        f = node->next;
-        delete node;
-        length--;
-    }
-
-    void pop_back(){
-        if(f == nullptr)
-            return;
-
-        if(f == l)
-            pop_front();
-
-        else{
+    T pop_front(){
+        if(f != nullptr){
             Node* node = f;
-
-            while(node->next != l)
-                node = node->next;
-
-            node->next = nullptr;
-            delete l;
-            l = node;
+            f = node->next;
+            T n = *node->value;
+            delete node;
+            length--;
+            return n;
         }
-        length--;
+    }
+
+    T pop_back(){
+        if(f != nullptr){
+            if(f == l)
+                pop_front();
+            else{
+                T n;
+                Node* node = f;
+
+                while(node->next != l)
+                    node = node->next;
+
+                node->next = nullptr;
+                n = *l->value;
+                delete l;
+                l = node;
+                return n;
+            }
+            length--;
+        }
     }
 
     T& operator[](int index){
@@ -335,33 +328,14 @@ private:
 int main()
 {
     MyList<int> c;
+    c.push_back(2);
     c.push_back(1);
     c.push_back(2);
-    int b = 123;
-    c.insert(1,&b);
-    int e = 321;
-    int h = 44;
-    c.push_front(e);
-    c.push_front(&h);
-    cout<<c<<"\n";
-    c.delete_element(1);
-    cout<<c<<"| "<<c.find(&h)<<" "<<c.find(2)<<"\n";
-    cin>>c;
-    cout<<c<<"\n";
-    MyList<MyList<int>> a;
-    a.push_back(&c);
-    MyList<int> q;
-    q.push_back(12);
-    q.push_back(5);
-    a.push_back(&q);
-    cout<<a<<"\n";
-    c.copy(q);
-    cout<<a<<"\n";
-    q[0] = 1;
-    cout<<a<<"\n";
-    MyList<MyList<int>> a1 = a;
-    cout<<"\na1 = "<<a1<<"\n";
-    a[0][1] = 888;
-    cout<<"\na1 = "<<a1;
+    c.push_back(2);
+    c.push_back(3);
+    c.push_back(2);
+    c.push_back(5);
+    c.delete_element(2);
+    cout<<c;
     return 0;
 }
