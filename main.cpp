@@ -111,7 +111,7 @@ public:
         if(f == nullptr)
             return;
 
-        if(f->value == v)
+        if(*f->value == v)
             pop_front();
 
         bool c = 0;
@@ -121,27 +121,19 @@ public:
             if(node->next == nullptr){
                 break;
             }
-            if(node->next->value == v){
+            if(*node->next->value == v){
                 c = 1;
-                break;
             }
-            node = node->next;
+            if(!c)node = node->next;
+
+            if(node != nullptr and c){
+                Node* _node = node->next;
+                node->next = node->next->next;
+                delete _node;
+            }
+            c = 0;
+            length--;
         }
-
-        if(!c)
-            return;
-
-        if(node != nullptr){
-            c = 1;
-            Node* _node = node->next;
-            node->next = node->next->next;
-            delete _node;
-        }
-
-        length--;
-
-        if(c)
-            delete_element(v);
     }
 
     void delete_element(T v){
