@@ -21,7 +21,6 @@ class MyList
             value = &val;
         }
     };
-private:
 
     Node* f;
     Node* l;
