@@ -15,7 +15,7 @@ class MyList
             value = _value;
             next = nullptr;
         }
-        Node(T _value){
+        Node(T& _value){
             val = _value;
             next = nullptr;
             value = &val;
@@ -29,34 +29,30 @@ class MyList
 public:
 
     class Iterator{
-        friend class MyList<T>;
         Node* node;
-        MyList* list;
     public:
         Iterator(){
             node = nullptr;
-            list = nullptr;
         }
 
-        Iterator(MyList* _, Node* __){
-            node = __;
-            list = _;
+        Iterator(Node* _){
+            node = _;
         }
 
         Iterator operator++(){
             if(node){
                 node = node->next;
-                return Iterator(list,node);
+                return Iterator(node);
             }
             return *this;
         }
 
         bool operator ==(Iterator a){
-            return list == a.list and node == a.node;
+            return node == a.node;
     }
 
         bool operator !=(Iterator a){
-            return list != a.list or node != a.node;
+            return node != a.node;
     }
 
         T& operator *(){
@@ -66,11 +62,11 @@ public:
     };
 
     Iterator begin(){
-        return Iterator(this, f);
+        return Iterator(f);
     }
 
     Iterator end(){
-        return Iterator(this, l->next);
+        return Iterator(l->next);
     }
 
 
